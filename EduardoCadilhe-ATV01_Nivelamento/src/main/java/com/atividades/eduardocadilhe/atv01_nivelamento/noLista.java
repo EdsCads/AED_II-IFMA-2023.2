@@ -41,7 +41,5 @@ public class noLista<T> { //T poderá assumir char,Int, DOuble...
     public void setAnterior(noLista<T> anterior) {
         this.anterior = anterior;
     }
-    
-    
 
 }
