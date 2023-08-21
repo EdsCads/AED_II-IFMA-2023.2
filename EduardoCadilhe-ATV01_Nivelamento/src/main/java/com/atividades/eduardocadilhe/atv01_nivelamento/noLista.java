@@ -8,6 +8,40 @@ package com.atividades.eduardocadilhe.atv01_nivelamento;
  *
  * @author Cadilhe
  */
-public class noLista {
+public class noLista<T> { //T poderá assumir char,Int, DOuble...
+    private T valor;
+    // No exemplo usaremos
+    // char nome
+    // int idade
+    // char formacao
+        
+    private noLista<T> proximo;
+    private noLista<T> anterior;
+
+    public T getValor() {
+        return valor;
+    }
+
+    public void setValor(T valor) {
+        this.valor = valor;
+    }
+
+    public noLista<T> getProximo() {
+        return proximo;
+    }
+
+    public void setProximo(noLista<T> proximo) {
+        this.proximo = proximo;
+    }
+
+    public noLista<T> getAnterior() {
+        return anterior;
+    }
+
+    public void setAnterior(noLista<T> anterior) {
+        this.anterior = anterior;
+    }
     
+    
+
 }
