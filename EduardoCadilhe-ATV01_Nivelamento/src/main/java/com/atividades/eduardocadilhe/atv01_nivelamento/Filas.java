@@ -105,7 +105,19 @@ public class Filas<T> implements EstruturaDeDados {
 
     @Override
     public void imprimir() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(noInicio==null||getQuantidade()==0){
+            System.out.println("Fila Vazia");
+        }
+        
+        String str="Fila{";
+        str+=(String)noInicio.getConteudo();
+        noFila<T> noAux = noInicio.getNoProximo();
+        while(noAux!=null){
+            str+=","+noAux.getConteudo();
+            noAux=noAux.getNoProximo();            
+        }
+        str+="}";
+        System.out.println(str);
     }
     
     
