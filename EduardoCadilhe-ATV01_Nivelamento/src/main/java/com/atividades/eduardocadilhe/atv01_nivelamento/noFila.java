@@ -33,9 +33,5 @@ public class noFila<T> {//T poderá assumir char,Int, DOuble...
     public void setConteudo(T conteudo) {
         this.conteudo = conteudo;
     }
-    
-    public void limparNoFila(){
-        setNoProximo(null);
-    }
 }
 

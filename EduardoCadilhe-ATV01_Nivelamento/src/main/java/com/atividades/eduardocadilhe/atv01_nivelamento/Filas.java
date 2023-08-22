@@ -9,9 +9,9 @@ import java.util.Iterator;
 import static LerArquivo.lerArquivo.readFileInList;
 
 public class Filas<T> implements EstruturaDeDados {
-    noFila<T> noInicio;
-    noFila<T> noFim;
-    int qtd;
+    private noFila<T> noInicio;
+    private noFila<T> noFim;
+    private int qtd;
     
     public void Filas(){
         noInicio=null;
@@ -26,7 +26,7 @@ public class Filas<T> implements EstruturaDeDados {
         while(noInicio!=null){
             noAux=noInicio;
             noInicio=noInicio.getNoProximo();
-            noAux.limparNoFila();
+            noAux.setNoProximo(null);
         }
         noFim=null;
         qtd=0;
@@ -46,7 +46,7 @@ public class Filas<T> implements EstruturaDeDados {
 
     @Override
     public boolean inserirArquivo() {
-         File directory = new File("");
+        File directory = new File("");
         String caminho = (String) directory.getAbsolutePath();
         // caminho += "//src//entrada//";
         caminho += "//dados_1.txt";
@@ -92,7 +92,7 @@ public class Filas<T> implements EstruturaDeDados {
         }
         else {
             noInicio = noInicio.getNoProximo();
-            noAux.limparNoFila();
+            noAux.setNoProximo(null);
         }
         decrementQuantidade();
         return true;
@@ -100,7 +100,9 @@ public class Filas<T> implements EstruturaDeDados {
 
     @Override
     public Object buscar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(noInicio==null) return null;
+        
+        return noInicio.getConteudo();
     }
 
     @Override
@@ -113,7 +115,7 @@ public class Filas<T> implements EstruturaDeDados {
         str+=(String)noInicio.getConteudo();
         noFila<T> noAux = noInicio.getNoProximo();
         while(noAux!=null){
-            str+=","+noAux.getConteudo();
+            str+=", "+noAux.getConteudo();
             noAux=noAux.getNoProximo();            
         }
         str+="}";
