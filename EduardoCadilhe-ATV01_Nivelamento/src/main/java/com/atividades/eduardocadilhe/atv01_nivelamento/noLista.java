@@ -10,11 +10,7 @@ package com.atividades.eduardocadilhe.atv01_nivelamento;
  */
 public class noLista<T> { //T poderá assumir char,Int, DOuble...
     private T valor;
-    // No exemplo usaremos
-    // char nome
-    // int idade
-    // char formacao
-        
+    
     private noLista<T> proximo;
     private noLista<T> anterior;
 

@@ -8,7 +8,7 @@ package com.atividades.eduardocadilhe.atv01_nivelamento;
  *
  * @author Cadilhe
  */
-public class noFila<T> {
+public class noFila<T> {//T poderá assumir char,Int, DOuble...
     private noFila<T> noProximo;
     private T conteudo;
     
