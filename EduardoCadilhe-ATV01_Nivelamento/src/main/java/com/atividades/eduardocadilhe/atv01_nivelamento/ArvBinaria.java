@@ -33,7 +33,129 @@ public class ArvBinaria<T extends Comparable<T>> implements EstruturaDeDados {
         }
     }
     
+    private noArv<T> remover(noArv<T> noAtual)    {
+        noArv<T> no1,no2;
+        if(noAtual.getNoEsquerdo()==null){
+            no2 = noAtual.getNoDireito();
+            noAtual.setNoEsquerdo(null);
+            noAtual.setNoDireito(null);
+            noAtual.setConteudo(null);
+            return no2;
+        }
+        no1 = noAtual;
+        no2 = noAtual.getNoEsquerdo();
+        while(no2.getNoDireito() != null) {
+            no1 = no2;
+            no2 = no2.getNoDireito();
+        }
+        if(no1 != noAtual) {
+            no1.setNoDireito(no2.getNoEsquerdo());
+            no2.setNoEsquerdo(noAtual.getNoEsquerdo());
+        }
+        no2.setNoDireito(noAtual.getNoDireito());
+        noAtual.setNoEsquerdo(null);
+        noAtual.setNoDireito(null);
+        return no2;        
+    }
+    private void exibirEmOrdem(noArv<T> noAtual) {
+        if(noAtual != null){
+            exibirEmOrdem(noAtual.getNoEsquerdo());
+            String str = "";
+            str += noAtual.getConteudo();
+            System.out.printf("%s ", str);
+            exibirEmOrdem(noAtual.getNoDireito());
+        }
+    }
     
+    public void exibirEmOrdem() {
+        System.out.println();
+        System.out.printf("Em ordem: ");
+        exibirEmOrdem(noRaiz);
+        System.out.println();
+    }
+
+    private void exibirPosOrdem(noArv<T> noAtual) {
+        if(noAtual != null){
+            exibirPosOrdem(noAtual.getNoEsquerdo());
+            exibirPosOrdem(noAtual.getNoDireito());
+            String str = "";
+            str += noAtual.getConteudo();
+            System.out.printf("%s ", str);
+        }
+    }
+    
+    public void exibirPosOrdem() {
+        System.out.println();
+        System.out.printf("Pos ordem: ");
+        exibirPosOrdem(noRaiz);
+        System.out.println();
+    }
+
+    private void exibirPreOrdem(noArv<T> noAtual) {
+        if(noAtual != null){
+            String str = "";
+            str += noAtual.getConteudo();
+            System.out.printf("%s ", str);
+            exibirPreOrdem(noAtual.getNoEsquerdo());
+            exibirPreOrdem(noAtual.getNoDireito());
+        }
+    }
+    
+    public void exibirPreOrdem() {
+        System.out.println();
+        System.out.printf("Pre ordem: ");
+        exibirPreOrdem(noRaiz);
+        System.out.println();
+    }
+    
+    private void limparNo(noArv<T> noAtual) {
+        if(noAtual == null) return;
+        limparNo(noAtual.getNoEsquerdo());
+        limparNo(noAtual.getNoDireito());
+        noAtual.setNoEsquerdo(null);
+        noAtual.setNoDireito(null);
+        decrementQuantidade();
+    }
+    
+    public void limpar() {
+        if(noRaiz == null) return;
+        limparNo(noRaiz);
+        noRaiz = null;
+    }
+    
+    private void incrementQuantidade() {
+        qtd++;
+    }
+    
+    private void decrementQuantidade() {
+        if(qtd > 0) qtd--;
+    }
+    
+    public int totalNos() {
+        return qtd;
+        //return totalNos(noRaiz);
+    }
+    
+    private int altura(noArv<T> noAtual) {
+        if(noAtual == null) return 0;
+        
+        int altEsquerda = altura(noAtual.getNoEsquerdo());
+        int altDireita = altura(noAtual.getNoDireito());
+        
+        if(altEsquerda > altDireita)
+            return (altEsquerda + 1);
+        else
+            return (altDireita + 1);
+    }
+    
+    public int altura() {
+        return altura(noRaiz);
+    }
+    
+    public boolean vazia() {
+        return noRaiz == null;
+    }
+
     @Override
     public boolean inserirArquivo() {
         File directory = new File("");
@@ -63,17 +185,52 @@ public class ArvBinaria<T extends Comparable<T>> implements EstruturaDeDados {
 
     @Override
     public boolean remover(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         if(noRaiz == null) return false;
+        
+        noArv<T> noAnterior = null;
+        noArv<T> noAtual = noRaiz;
+        
+        while(noAtual != null) {
+            T obj = (T)o;
+            if(obj.compareTo(noAtual.getConteudo()) == 0) {
+                if(obj.compareTo(noRaiz.getConteudo()) == 0)
+                    noRaiz = remover(noAtual);
+                else {
+                    if(noAnterior.getNoDireito() == noAtual)
+                        noAnterior.setNoDireito(remover(noAtual));
+                    else
+                        noAnterior.setNoEsquerdo(remover(noAtual));
+                }
+                decrementQuantidade();
+                return true;
+            }
+            noAnterior = noAtual;
+            if(obj.compareTo(noAtual.getConteudo()) > 0)
+                noAtual = noAtual.getNoDireito();
+            else
+                noAtual = noAtual.getNoEsquerdo();
+        }
+        return false;
     }
 
     @Override
     public Object buscar(Object o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        noArv<T> noAtual = noRaiz;
+        while(noAtual != null) {
+            T obj = (T) o;
+            if(obj.compareTo(noAtual.getConteudo()) == 0)
+                return noAtual.getConteudo();
+            else if(obj.compareTo(noAtual.getConteudo()) < 0)
+                noAtual = noAtual.getNoEsquerdo();
+            else if(obj.compareTo(noAtual.getConteudo()) > 0)
+                noAtual = noAtual.getNoDireito();
+        }
+        return null;
     }
 
     @Override
     public void imprimir() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.exibirEmOrdem(noRaiz);
     }
     
     
