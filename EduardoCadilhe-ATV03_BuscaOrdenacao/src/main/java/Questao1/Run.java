@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.atividades.atv03_buscaordenacao;
+package Questao1;
 
 /**
  *
  * @author Cadilhe
  */
-public class EduardoCadilheATV03_BuscaOrdenacao {
+public class Run {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
