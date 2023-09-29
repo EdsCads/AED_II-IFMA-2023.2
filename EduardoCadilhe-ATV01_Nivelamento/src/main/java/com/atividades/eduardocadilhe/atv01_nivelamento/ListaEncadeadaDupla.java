@@ -7,8 +7,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 import static LerArquivo.lerArquivo.readFileInList;
-/**
- *
+/*
  * @author Cadilhe
  */
 public class ListaEncadeadaDupla<T> implements EstruturaDeDados{
